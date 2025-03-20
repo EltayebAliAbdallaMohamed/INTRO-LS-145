@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q SKILLS INTRO LS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 60px; /* Space for the fixed controls */
+        }
+        .keyWord {
+            color: red;
+            font-size: large;
+            font-weight: 700;
+        }
+        .slide {
+            border: 1px solid #ccc;
+            padding: 10px; /* Reduced padding */
+            margin: 20px; /* Margin around the slide */
+            margin-bottom: 0; /* No margin at the bottom to minimize gap */
+        }
+        img {
+            width: 200px;
+            height: auto;
+        }
+        h3{
+            margin-left: 20px;
+        }
+        p{
+        width: 86%;
+            font-size: large;
+            font-weight: 700;
+        }
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background: white; /* Background color for the fixed controls */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="number"] {
+            padding: 5px;
+            width: 80px;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .objective {
+            color: blue;
+            font-size: large;
+        }
+        .arabic {
+            direction: rtl;
+            text-align: right;
+            color: green;
+            font-size: large;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h3>How do you use technology? <br> 
+        Page 145
+    </h3>
+    <div class="slide"></div>
+    
+    <audio id="audioPlayer" controls></audio> <!-- Static audio player -->
+    
+    <div class="controls">
+        <button onclick="previousSlide()">
+            <img src="backward.png" alt="Next" style="width: 20px; height: 20px;" />
+            
+        </button>
+        <button onclick="nextSlide()">
+            <img src="forward.png" alt="Next" style="width: 20px; height: 20px;" />
+        </button>
+        <input type="number" id="slideInput" min="1" max="4" placeholder="Slide " />
+        <button onclick="goToSlide()">Go</button>
+    </div>
+
+    <script>
+        let utterance= new SpeechSynthesisUtterance();
+        const Items = [
+        {
+                audio: "Q3eSE_LS0_U08_01_QClassroom.mp3",
+                English: "Q3eSE_LS0_U08_01_QClassroom",
+                Arabic: "Q3eSE_LS0_U08_01_QClassroom",
+                
+                
+                
+                              
+            },
+            {
+                audio: "The Unit Question is.mp3",
+                English: "The Unit Question is:",
+                Arabic: " سؤال الوحدة هو",
+                
+                
+                              
+            },
+            {
+                audio: "How do you use technology.mp3",
+                English: "How do you use technology?",
+                Arabic: "كيف تستخدم التكنولوجيا  ",
+            },
+            {
+                audio: "Yuna.mp3",
+                English: "Yuna?",
+                Arabic: "يونا",},
+                {
+                audio: "what is one way that you use technology.mp3",
+                English: "What is one way that you use technology?",
+                Arabic: "ما هي طريقة واحدة تستخدمين فيها التكنولوجيا؟",},
+                {
+                audio: "What is one way.mp3",
+                English: "What is one way?",
+                Arabic: "ما هي طريقة واحدة؟",},
+                {
+                audio: "that you use technology.mp3",
+                English: "that you use technology?",
+                Arabic: "التي تستخدمين فيها التكنولوجيا؟",},
+                {
+                audio: "what is one way that you use technology.mp3",
+                English: "What is one way that you use technology?",
+                Arabic: "ما هي طريقة واحدة تستخدمين فيها التكنولوجيا؟",},
+               
+            {
+                audio: "I use it for social media, like Instagram and Facebook.mp3",
+                English: "I use it for social media, like Instagram and Facebook.",
+                Arabic: "أستخدمها لوسائل التواصل الاجتماعي، مثل انستغرام وفيسبوك",
+
+            },
+            {
+                audio: "I use it for social media.mp3",
+                English: "I use it for social media.",  
+                Arabic: "أستخدمها لوسائل التواصل الاجتماعي",            
+            },
+            {
+                audio: "like Instagram and Facebook.mp3",
+                English: "like Instagram and Facebook.",
+                Arabic: "مثل انستغرام وفيسبوك",            
+            },
+           
+            {
+                audio: "I use it for social media, like Instagram and Facebook.mp3",
+                English: "I use it for social media, like Instagram and Facebook.",
+                Arabic: "أستخدمها لوسائل التواصل الاجتماعي، مثل انستغرام وفيسبوك",
+
+            },
+            {
+        audio: "Yes.mp3",
+        English: "Yes.",
+        Arabic: "نعم",
+            },
+    
+        {
+        audio: "Yes, we all probably use social media.mp3",
+        English: "Yes, we all probably use social media.",
+        Arabic: "نعم، ربما نستخدم جميعًا وسائل التواصل الاجتماعي",
+    },
+        {
+        audio: "Yes, we all probably use social media every day.mp3",
+        English: "Yes, we all probably use social media every day.",
+        Arabic: "نعم، ربما نستخدم جميعًا وسائل التواصل الاجتماعي كل يوم",
+    },
+        {
+        audio: "How about you, Felix.mp3",
+        English: "How about you, Felix?",
+        Arabic: "ماذا عنك، فيلكس؟",
+    },
+        {
+        audio: "How do you use technology.mp3",
+        English: "How do you use technology?",
+        Arabic: "كيف تستخدم التكنولوجيا  ",
+        },
+        {
+        audio: "I use it to text my friends and family.mp3",
+        English:"I use it to text my friends and family.",
+        Arabic: "أستخدمها لإرسال رسائل نصية إلى أصدقائي وعائلتي",
+    },
+        {
+        audio: "Good.mp3",
+        English: "Good.",
+        Arabic: "جيد",
+    },
+        {
+        audio: "What are some other ways that you use technology.mp3",
+        English: "What are some other ways that you use technology?",
+        Arabic: "ما هي بعض الطرق الأخرى التي تستخدم فيها التكنولوجيا؟",},
+        {
+            audio: "What are some other ways.mp3",
+            English: "What are some other ways?",
+            Arabic: "ما هي بعض الطرق الأخرى؟",},
+            {
+                audio: "that you use technology.mp3",
+                English: "that you use technology?",
+                Arabic:"التي تستخدم فيها التكنولوجيا؟",},
+                
+
+            
+            
+        {
+            audio: "Sophy.mp3",
+            English: "Sophy?",
+            Arabic: "صوفي",},
+            {
+            audio: "I use it to stay healthy.mp3",
+            English: "I use it to stay healthy.",
+            Arabic: "أستخدمها للبقاء بصحة جيدة",},
+            {
+                audio: "I keep track of how much I walk every day.mp3",
+                English: "I keep track of how much I walk every day.",
+                Arabic: "أحافظ على تتبع كم أمشي كل يوم",
+            },
+            {
+                audio: "I use it to stay healthy I keep track of how much I walk every day.mp3", 
+                  English: "I use it to stay healthy. I keep track of how much I walk every day.",
+                  Arabic: "أستخدمها للبقاء بصحة جيدة أحافظ على تتبع كم أمشي كل يوم",
+                },
+                {
+                    audio: "Yes.mp3",
+                    English: "Yes",
+                    Arabic: "نعم",
+
+                },
+                {
+            
+                
+                audio: "a lot of people use their phones and fitness trackers.mp3",
+                English: "A lot of people use their phones and fitness trackers.",
+                Arabic: "يستخدم الكثير من الناس هواتفهم وأجهزة تتبع اللياقة البدنية",
+            },
+                {
+                audio: "to help them stay healthy these days.mp3",
+                English: "to help them stay healthy these days.",
+                Arabic: "لمساعدتهم على البقاء بصحة جيدة في هذه الأيام",},
+                {
+                audio: "I use it to stay healthy I keep track of how much I walk every day.mp3", 
+                  English: "I use it to stay healthy. I keep track of how much I walk every day.",
+                  Arabic: "أستخدمها للبقاء بصحة جيدة أحافظ على تتبع كم أمشي كل يوم",
+                },
+                {
+                    audio: "Yes.mp3",
+                    English: "Yes",
+                    Arabic: "نعم",
+
+                },
+                {
+                    audio: "a lot of people use their phones and fitness trackers to help them stay healthy these days.mp3",
+                    English: "A lot of people use their phones and fitness trackers to help them stay healthy these days.",
+                    Arabic: "يستخدم الكثير من الناس هواتفهم وأجهزة تتبع اللياقة البدنية لمساعدتهم على البقاء بصحة جيدة في هذه الأيام",
+                },
+                    {
+                        audio: "Marcus.mp3",
+                        English: "Marcus",
+                        Arabic: "ماركوس",},
+                       
+                    {
+                        audio: "what about you.mp3",
+                        English: "What about you?",
+                        Arabic: "ماذا عنك؟",
+                    },
+                    {
+                        audio: "I use it for schoolwork.mp3",
+                        English: "I use it for schoolwork.",
+                        Arabic: "أستخدمها للواجبات المدرسية",},
+                        {
+                        
+                            audio: "Yes.mp3",
+                            English: "Yes",
+                            Arabic: "نعم",
+                        },
+                        {
+                            audio: "that’s a great way to use technology.mp3",
+                            English: "That’s a great way to use technology.",
+                            Arabic: "هذه طريقة رائعة لاستخدام التكنولوجيا",
+                        },
+
+
+                    
+
+
+    
+    
+            
+        ];
+
+        let currentAudioIndex = 0;
+
+        const propertyHandlers = {
+            Objective: (value) => `<p class="objective">${value}</p>`,
+
+            
+            keyWord: (value) => `<p class="keyWord">${value}</p>`,
+            Def: (value) => `<details><summary>Definition:</summary><p>${value}</p></details>`,
+            Arabic: (value) => `<p class="arabic">${value}</p>`,
+            Question: (value) => `<p>${value}</p>`,
+            
+            English: (value) => `<details><summary>Audio Script:</summary><p>${value}</p></details>`,
+           
+
+            Speaker: (value) => `<details><summary>Speaker:</summary><p>${value}</p></details>`,
+            image: (value) => `
+                <details>
+                    <summary>Show Image</summary>
+                    <img src="${value}" alt="Description of the image">
+                </details>`,
+                video: (value) => `
+        <details>
+            <summary>Show Video</summary>
+            <video controls width="300">
+                <source src="${value}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </details>`,
+        };
+
+        // Set the initial audio source before displaying data
+        const audioPlayer = document.getElementById("audioPlayer");
+        audioPlayer.src = Items[currentAudioIndex].audio;
+
+        function displayData() {
+            const slideContainer = document.querySelector(".slide");
+            slideContainer.innerHTML = ''; // Clear only the content of the slide
+            
+            const numberP = document.createElement("p");
+            numberP.textContent = `Sound Clip: ${currentAudioIndex + 1} of ${Items.length}`;
+            slideContainer.appendChild(numberP);
+
+            // Update the audio source
+            audioPlayer.src = Items[currentAudioIndex].audio;
+
+            for (const key in Items[currentAudioIndex]) {
+                const value = Items[currentAudioIndex][key];
+                if (propertyHandlers[key] && value !== undefined) {
+                    const content = propertyHandlers[key](value);
+                    if (content) {
+                        slideContainer.innerHTML += content; // Append content
+                    }
+                }
+            }
+
+            // Play the audio
+            audioPlayer.play();
+        }
+
+        function nextSlide() {
+            currentAudioIndex = (currentAudioIndex + 1) % Items.length;
+            displayData();
+        }
+
+        function previousSlide() {
+            currentAudioIndex = (currentAudioIndex - 1 + Items.length) % Items.length;
+            displayData();
+        }
+
+        function goToSlide() {
+            const input = document.getElementById("slideInput").value;
+            const index = parseInt(input) - 1; // Convert to zero-based index
+            if (index >= 0 && index < Items.length) {
+                currentAudioIndex = index;
+                displayData();
+            } else {
+                alert("Please enter a valid slide number.");
+            }
+        }
+        document.addEventListener('keydown', (e) => {
+            const selectedText = document.getSelection().toString();
+            // Check if the active element is not the input field
+            if (document.activeElement.tagName !== 'INPUT' && selectedText) {
+                if (e.key === "s") {
+                    utterance.text = selectedText;
+                    speechSynthesis.speak(utterance);
+                }
+            } 
+        });
+
+
+        // Initial display
+        displayData();
+    </script>
+</body>
+</html>
